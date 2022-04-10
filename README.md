@@ -39,7 +39,7 @@ O servidor de c2 será responsável também por enviar o comando de ataque e par
 ### Zumbi
 > O frontend malicioso
 
-Este será um frontend onde os zumbis, ou bots infectados irão se conectar, escutar e enviar mensagens para o servidor de controle.
+Esta será uma aplicação web onde as vítimas irão se conectar e se comunicar com o servidor de controle, aguardando ordens de ataque por trás dos panos utilizando a tecnologia de websockets.
 
 Os clientes conectados terão que responder um pulso enviado pelo servidor para provar que ainda estão conectados e ativos, esperando o comando e o alvo do ataque.
 
