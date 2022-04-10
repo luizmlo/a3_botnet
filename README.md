@@ -51,7 +51,7 @@ Os clientes conectados terão que responder um pulso enviado pelo servidor para 
 
 Este será um servidor de demonstração que irá sofrer o ataque coordenado da botnet e será sobrecarregado, tendo sua funcionalidade prejudicada pelos zumbis.
 
-Este irá contar com uma interface de monitoramento, onde poderemos observar ao vivo o estado da vitima, quantas requisições estão chegando, a quantidade de banda e tráfego recebida e etc.
+Este irá contar com uma interface de monitoramento, onde iremos observar ao vivo o estado da vitima, quantas requisições estão chegando, a quantidade de banda, tráfego recebido e outras métricas.
 
 #
 
