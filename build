@@ -1,0 +1,19 @@
+#! /bin/sh
+
+# limpa instalação posterior, caso exista
+rm -rf ./env 2&> /dev/null
+
+
+# instala python, pip e módulo de venv
+sudo apt install python3
+sudo apt install python3-pip
+sudo apt install python3-venv
+
+# inicializa o ambiente virtual
+python3 -m venv env
+
+# ativa o ambiente virtual
+source ./env/bin/activate
+
+# instala dependencias do python
+pip install -r ./requirements.txt
