@@ -57,6 +57,7 @@ Este irá contar com uma interface de monitoramento, onde iremos observar ao viv
 
 <a name="setup"></a>
 ### Setup
+> Work in progress, não está funcional ainda
 Para rodar o projeto em sua própria máquina, são necessárias algumas dependências:
 - python3 (3.9.7 foi usado para o desenvolvimento)
 - python3-pip
