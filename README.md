@@ -29,9 +29,9 @@ Este projeto vai ser muito complexo e contará com diversas partes, entre elas u
 
 Este será um servidor feito em python utilizando as bibliotecas asyncio e websocket que irá fazer a gestão, controle e monitoramento dos zumbis.
 
-Este será responsável por manter uma espécie de Hearbeat, um pulso que irá checar a conexão de todos os zumbis e enviar uma mensagem para todos os zumbis que não estão conectados ou perderam a conexão com o servidor de controle.
+Este será responsável por manter uma espécie de Heartbeat, um pulso que irá checar a conexão de todos os zumbis e enviar uma mensagem para todos os zumbis que não estão conectados ou perderam a conexão com o servidor de controle.
 
-O servidor de c2 será responsável também por enviar o comando de ataque e parada para os zumbis, que irão agir de maneira coordenada e sobrecarregar a vítima, causando um DDoS.
+O servidor de c2 será responsável também por enviar o comando de ataque e parada para os zumbis, que irão agir de maneira coordenada e sobrecarregar a vítima, causando um ataque distribuido de negação de serviço, um ataque de DDoS.
 
 #
 
