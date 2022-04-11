@@ -9,16 +9,20 @@ server_port = 8765
 
 # sends a ping to the websocket server every second with a random string
 async def parse_message(websocket, message):
+    debug_mode = True # prints all messages
+    
     try:
         message = json.loads(message) # convert to json
         if message:
             if message['type'] == 'handshake_ping':
-                print(f"[S] handshake_ping received: server_key: {message['server_key']}")
+                if debug_mode:
+                    print(f"[S] received handshake_ping: server_key: {message['server_key']}")
                 await handshake_pong(websocket, message['server_key'])
                 return {'type': 'handshake_ping', 'server_key': message['server_key']}
 
             elif message['type'] == 'handshake_success' and len(message['checksum']) > 0:
-                print(f"[S] handshake_success received - ready to start heartbeat")
+                if debug_mode:
+                    print(f"[S] received handshake_success - checksum: {message['checksum']}")
                 return {"type":"handshake_success", "checksum": message['checksum']}
 
     except Exception as e: 
@@ -28,7 +32,7 @@ async def parse_message(websocket, message):
 
 async def main():
     async with websockets.connect(f"ws://{server_ip}:{server_port}") as websocket:
-        print(f'[C] created websocket connection to server {server_ip}:{server_port}')
+        print(f'[C] created connection to server {server_ip}:{server_port}')
 
         while True:
             # generate random key for encryption
@@ -44,7 +48,8 @@ async def main():
 async def handshake_finish(client_checksum, server_checksum):
     try:
         if client_checksum == server_checksum:
-            print(f"[S] handshake_finish valid - checksum: {client_checksum}")
+            #print(f"[C] handshake_finish valid - checksum: {client_checksum}")
+            print(f'[C] checksum valid  - ready to start heartbeat')
 
     except Exception as e:
         print(f'[C] client error on handshake_finish: {str(e)}')
@@ -61,21 +66,18 @@ async def handshake_pong(websocket, server_key):
                 print('[C] Invalid client name, input between 4 and 16 characters')
                 client_name = None
 
-        client_full_name = client_name+client_key+server_key
-        client_checksum = hashlib.sha256(client_full_name.encode()).hexdigest()
+        client_full_name = client_name + "_" + client_key + server_key
+        client_checksum = hashlib.sha256(client_full_name.encode()).hexdigest()[:16]
         print(f"[C] client_full_name: {client_full_name} - checksum: {client_checksum}")
         message = {"type": "handshake_pong", "client_name": f"{client_full_name}"}
         message = json.dumps(message)
         await websocket.send(message)
 
-        print(f"[C] handshake_pong sent: {message}")
+        print(f"[C] handshake_pong sent: {client_full_name}")
 
         handshake_success = await websocket.recv()
         success = await parse_message(websocket, handshake_success)
-        if success['type'] == 'handshake_success':
-            await handshake_finish(client_checksum, success['checksum'])
-            print(f"[C] handshake_success received - ready to start heartbeat")
-            return
+        await handshake_finish(client_checksum, success['checksum'])
 
     except Exception as e:
         print(f'[C] client error on handshake_pong: {str(e)}')
