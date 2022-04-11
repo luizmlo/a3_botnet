@@ -72,11 +72,15 @@ Este irá contar com uma interface de monitoramento, onde iremos observar ao viv
 
 Linha do tempo: (C=cliente, S=servidor))  
 
-C ---> S | C Abre conexão websocket  
-C <--- S | S Envia handshake_ping e chave aleatória server_key  
-C ---> S | C Envia handshake_pong, nome do zumbi e chave aleatória client_key  
-C <--- S | S Envia handshake_success, hash do nome do zumbi e das duas chaves trocadas  
-C ---> S | C Envia handshake_success, confirmando que a troca de chaves foi válida e que já está esperando as rotinas de heartbeat e ataque  
+1 C ---> S | C Abre conexão websocket  
+2 C <--- S | S Envia handshake_ping e chave aleatória server_key  
+3 C ---> S | C Envia handshake_pong, nome do zumbi e chave aleatória client_key  
+4 C <--- S | S Envia handshake_success, hash do nome do zumbi e das duas chaves trocadas  
+5 C ---> S | C Envia handshake_success, confirmando que a troca de chaves foi válida e que já está esperando as rotinas de heartbeat e ataque
+
+> Falta o passo 5 na imagem.
+
+![](https://i.imgur.com/hKQYgFJ.png)
 
 #
 
