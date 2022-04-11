@@ -1,0 +1,10 @@
+#! /bin/sh
+
+# Script to run the Zumbi application
+# uses python flask
+
+source activate ./env/bin/activate
+
+cd ./zumbi
+
+python app.py
