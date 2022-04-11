@@ -75,8 +75,10 @@ Linha do tempo: (C=cliente, S=servidor))
 1 C ---> S | C Abre conexão websocket  
 2 C <--- S | S Envia handshake_ping e chave aleatória server_key  
 3 C ---> S | C Envia handshake_pong, nome do zumbi e chave aleatória client_key  
-4 C <--- S | S Envia handshake_success, hash do nome do zumbi e das duas chaves trocadas  
-5 C ---> S | C Envia handshake_success, confirmando que a troca de chaves foi válida e que já está esperando as rotinas de heartbeat e ataque
+4 C <--- S | S Envia handshake_success, hash sha256 do nome do zumbi e das duas chaves trocadas  
+5 C ---> S | C Envia handshake_success após comparar os hashes sha256 do identificador do zumbi e o hash recebido pelo servidor, confirmando que a troca de chaves foi válida e que já está esperando as rotinas de heartbeat e ataque
+
+Este processo é puramente por Proof of Concept e não é de fato um handshake real, já que este processo é feito por trás dos panos já que estamos usando a tecnologia de websockets.
 
 > Falta o passo 5 na imagem.
 
