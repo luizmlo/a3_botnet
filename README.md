@@ -80,13 +80,14 @@ Linha do tempo: (C=cliente, S=servidor))
 
 Este processo é puramente por Proof of Concept e não é de fato um handshake real, já que este processo é feito por trás dos panos já que estamos usando a tecnologia de websockets.
 
-> Falta o passo 5 na imagem.
+> vou adicionar um gif depois
 
-![](https://i.imgur.com/hKQYgFJ.png)
+![](https://i.imgur.com/AgrAJAp.png)
 
 #
 
 #### Heartbeat
+> O servidor de controle envia um pacote do tipo heartbeat_ping para todos os zumbis que estão conectados.
 
 #
 
