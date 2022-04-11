@@ -27,7 +27,7 @@ async def parse_message(websocket):
                     raise Exception(f'[C] unknown message type: {message}')
 
         except Exception as e:
-            print(f'[C] server error on parse_message: {str(e)}')
+            print(f'[S] server error on parse_message: {str(e)}')
 
         response = json.dumps(message)  
         await websocket.send(response)
@@ -35,12 +35,12 @@ async def parse_message(websocket):
 async def finish_handshake(websocket, client_name):
     print(f'[C] received handshake_pong - {client_name}')
 
-    server_checksum = hashlib.sha256(client_name.encode()).hexdigest()
+    server_checksum = hashlib.sha256(client_name.encode()).hexdigest()[:16]
     handshake_success = {"type":"handshake_success", "checksum": server_checksum}
     handshake_success = json.dumps(handshake_success)
     await websocket.send(handshake_success)
-    print(f'[C] handshake_success sent - {server_checksum}')
-    
+    print(f'[S] sending handshake_success - {server_checksum}')
+
 
 async def start_handshake(websocket):
     server_key = "".join([random.choice('abcdef0123456789') for _ in range(4)])     
