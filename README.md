@@ -12,6 +12,9 @@ Indice
   - [C2](#c2)
   - [Zumbi](#zumbi)
   - [Vitima](#vitima)
+  - [Protocolos de Rede](#protocolos-de-rede)
+    - [Handshake](#handshake)
+    - [Heartbeat](#heartbeat)
   - [Setup](#setup)
 
 #
@@ -52,6 +55,29 @@ Os clientes conectados terão que responder um pulso enviado pelo servidor para 
 Este será um servidor de demonstração que irá sofrer o ataque coordenado da botnet e será sobrecarregado, tendo sua funcionalidade prejudicada pelos zumbis.
 
 Este irá contar com uma interface de monitoramento, onde iremos observar ao vivo o estado da vitima, quantas requisições estão chegando, a quantidade de banda, tráfego recebido e outras métricas.
+
+#
+
+<a name="protocolos"></a>
+### Protocolos de Rede  
+#### Handshake
+> O processo começa com a abertura da conexão websocket, que é feita pelo cliente.  
+> O servidor então responde com um pacote handshake_ping e uma chave aleatória de 4 bytes que será utilizada para criptografar as mensagens entre o cliente e o servidor.  
+> O cliente então responde com um handshake_pong e outra chave aleatória de 4 bytes, além de um nome de tamanho entre 4 e 16 caracteres, usado para identificar o zumbi.  
+> Usando o nome e as duas chaves trocadas, o servidor faz o hash da chave e envia um pacote do tipo handshake_success, contendo o hash.  
+> O cliente então compara o hash local com o hash recebido pelo servidor e se os hashes forem iguais, a conexão é aceita.  
+
+Linha do tempo: (C=cliente, S=servidor))  
+
+C ---> S | Abre conexão websocket  
+C <--- S | S Envia handshake_ping e chave aleatória server_key  
+C ---> S | C Envia handshake_pong, nome do zumbi e chave aleatória client_key  
+C <--- S | S Envia handshake_success, hash do nome do zumbi e das duas chaves trocadas  
+C ---> S | C Envia handshake_success, confirmando que a troca de chaves foi válida e que já está esperando as rotinas de heartbeat e ataque  
+
+#
+
+#### Heartbeat
 
 #
 
