@@ -69,7 +69,7 @@ Este irá contar com uma interface de monitoramento, onde iremos observar ao viv
 
 Linha do tempo: (C=cliente, S=servidor))  
 
-C ---> S | Abre conexão websocket  
+C ---> S | C Abre conexão websocket  
 C <--- S | S Envia handshake_ping e chave aleatória server_key  
 C ---> S | C Envia handshake_pong, nome do zumbi e chave aleatória client_key  
 C <--- S | S Envia handshake_success, hash do nome do zumbi e das duas chaves trocadas  
