@@ -68,7 +68,7 @@ Este irá contar com uma interface de monitoramento, onde iremos observar ao viv
 > O servidor então responde com um pacote handshake_ping e uma chave aleatória de 4 bytes que será utilizada para criptografar as mensagens entre o cliente e o servidor.  
 > O cliente então responde com um handshake_pong e outra chave aleatória de 4 bytes, além de um nome de tamanho entre 4 e 16 caracteres, usado para identificar o zumbi.  
 > Usando o nome e as duas chaves trocadas, o servidor faz o hash da chave e envia um pacote do tipo handshake_success, contendo o hash.  
-> O cliente então compara o hash local com o hash recebido pelo servidor e se os hashes forem iguais, a conexão é aceita.  
+> O cliente então compara o hash local com o hash recebido pelo servidor e se os hashes forem iguais, envia outro pacote handshake_success, indicando ao servidor de controle que a comunicação foi iniciada e as rotinas de heartbeats e ataque deve começar.  
 
 Linha do tempo: (C=cliente, S=servidor))  
 
