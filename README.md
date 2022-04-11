@@ -1,13 +1,16 @@
 ## A3 - Botnets
 
-> Este é um repositório onde documentarei todo o processo de pesquisa e desenvolvimento do meu trabalho de conclusão de semestre da UC de Ambientes Computacionais e Segurança.  
-> O tema escolhido pelo meu grupo foi o de Botnets, que é uma coleção de tecnologias que utilizam redes de computadores para comunicar-se entre si.  
-> O projeto que escolhi fazer contará com uma botnet 100% funcional feita com websockets e Python, funcionando em cima do protocolo HTTP e rodando completamente no browser das "vítimas".
+#
+
+Este é um repositório onde documentarei todo o processo de pesquisa e desenvolvimento do meu trabalho de conclusão de semestre da UC de Ambientes Computacionais e Segurança.  
+O tema escolhido pelo meu grupo foi o de Botnets, que é uma coleção de tecnologias que utilizam redes de computadores para comunicar-se entre si.  
+O projeto que escolhi fazer contará com uma botnet 100% funcional feita com websockets e Python, funcionando em cima do protocolo HTTP e rodando completamente no browser das "vítimas".
 
 #
 
-Indice
+### Indice
 - [A3 - Botnets](#a3---botnets)
+  - [Indice](#indice)
   - [Resumo do Projeto](#resumo-do-projeto)
   - [C2](#c2)
   - [Zumbi](#zumbi)
