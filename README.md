@@ -11,25 +11,28 @@ O tema escolhido pelo meu grupo foi o de Botnets, uma coleção de tecnologias u
 #
 
 ### Indice
-- [Resumo do Projeto](#resumo-do-projeto)
+[**Resumo do Projeto**](#resumo-do-projeto)
   - [C2](#c2)
   - [Zumbi](#zumbi)
   - [Vitima](#vitima)
-- [Protocolos de Rede](#protocolos-de-rede)
+  
+[**Protocolos de Rede**](#protocolos-de-rede)
   - [Handshake](#handshake)
   - [Heartbeat](#heartbeat)
-- [Pacotes de Rede](#pacotes-de-rede)
+  
+[**Pacotes de Rede**](#pacotes-de-rede)
   - [handshake_ping](#handshake_ping)
   - [handshake_pong](#handshake_pong)
   - [handshake_success](#handshake_success)
   - [heartbeat_ping](#heartbeat_ping)
   - [heartbeat_pong](#heartbeat_pong)
-- [Setup](#setup)
+  
+[**Setup**](#setup)
 
 #
 
 <a name="resumo"></a>
-## Resumo do Projeto
+## **Resumo do Projeto**
 
 Este projeto vai ser muito complexo e contará com diversas partes, entre elas um servidor de controle que comandará os *zumbis*, um frontend malicioso que infecta as vítimas e um site que servirá de vítima da botnet, sofrendo um ataque de DDoS durante a apresentação ao vivo.
 
@@ -68,7 +71,7 @@ Este irá contar com uma interface de monitoramento, onde iremos observar ao viv
 #
 
 <a name="protocolos"></a>
-## Protocolos de Rede  
+## **Protocolos de Rede**
 ### Handshake
 > O processo começa com a abertura da conexão websocket, que é feita pelo cliente.  
 > O servidor então responde com um pacote handshake_ping e uma chave aleatória de 4 bytes que será utilizada para criptografar as mensagens entre o cliente e o servidor.  
@@ -97,7 +100,7 @@ Este processo é puramente por Proof of Concept e não é de fato um handshake r
 
 #
 
-## Pacotes de Rede
+## **Pacotes de Rede**
 > Lista com os pacotes e conteudos trocados entre o servidor de controle e zumbis, serializados em formato JSON
 
 - handshake_ping (C<--S)
@@ -129,13 +132,17 @@ Pacote enviado do zumbi ao servidor de controle respondendo um heartbeat_ping e 
 #
 
 <a name="setup"></a>
-## Setup
+## **Setup**
 > Work in progress, não está funcional ainda
-Para rodar o projeto em sua própria máquina, são necessárias algumas dependências:
+Para rodar o projeto em sua própria máquina, são necessárias algumas dependências.
+
+### Dependencias
 - python3 (3.9.7 foi usado para o desenvolvimento)
 - python3-pip
 - python3-venv
 
+
+### Instalação
 O repositório conta com um arquivo de setup que instala todas as dependências necessárias em sistemas Unix usando apt e outras utilidades do shell.
 
 Para instalar com o *./build* você precisa ter o *sudo* habilitado.
@@ -145,6 +152,7 @@ chmod +x ./build
 ./build
 ```
 
+### Executando
 Para rodar o servidor de controle e o frontend malicioso, utilize os comandos abaixo:
 
 ```bash
