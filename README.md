@@ -1,4 +1,4 @@
-## A3 - Botnets
+### A3 - Botnets
 
 #
 
@@ -11,21 +11,25 @@ O tema escolhido pelo meu grupo foi o de Botnets, uma coleção de tecnologias u
 #
 
 ### Indice
-- [A3 - Botnets](#a3---botnets)
-  - [Indice](#indice)
-  - [Resumo do Projeto](#resumo-do-projeto)
+- [Resumo do Projeto](#resumo-do-projeto)
   - [C2](#c2)
   - [Zumbi](#zumbi)
   - [Vitima](#vitima)
-  - [Protocolos de Rede](#protocolos-de-rede)
-    - [Handshake](#handshake)
-    - [Heartbeat](#heartbeat)
-  - [Setup](#setup)
+- [Protocolos de Rede](#protocolos-de-rede)
+  - [Handshake](#handshake)
+  - [Heartbeat](#heartbeat)
+- [Pacotes de Rede](#pacotes-de-rede)
+  - [**handshake_ping**](#handshake_ping)
+  - [**handshake_pong**](#handshake_pong)
+  - [**handshake_success**](#handshake_success)
+  - [**heartbeat_ping**](#heartbeat_ping)
+  - [**heartbeat_pong**](#heartbeat_pong)
+- [Setup](#setup)
 
 #
 
 <a name="resumo"></a>
-### Resumo do Projeto
+## Resumo do Projeto
 
 Este projeto vai ser muito complexo e contará com diversas partes, entre elas um servidor de controle que comandará os *zumbis*, um frontend malicioso que infecta as vítimas e um site que servirá de vítima da botnet, sofrendo um ataque de DDoS durante a apresentação ao vivo.
 
@@ -64,8 +68,8 @@ Este irá contar com uma interface de monitoramento, onde iremos observar ao viv
 #
 
 <a name="protocolos"></a>
-### Protocolos de Rede  
-#### Handshake
+## Protocolos de Rede  
+### Handshake
 > O processo começa com a abertura da conexão websocket, que é feita pelo cliente.  
 > O servidor então responde com um pacote handshake_ping e uma chave aleatória de 4 bytes que será utilizada para criptografar as mensagens entre o cliente e o servidor.  
 > O cliente então responde com um handshake_pong e outra chave aleatória de 4 bytes, além de um nome de tamanho entre 4 e 16 caracteres, usado para identificar o zumbi.  
@@ -88,13 +92,44 @@ Este processo é puramente por Proof of Concept e não é de fato um handshake r
 
 #
 
-#### Heartbeat
+### Heartbeat
 > O servidor de controle envia um pacote do tipo heartbeat_ping para todos os zumbis que estão conectados, que devem responder com um heartbeat_pong para comprovarem que estão ativos e esperando o comando de ataque.
 
 #
 
+## Pacotes de Rede
+> Lista com os pacotes e conteudos trocados entre o servidor de controle e zumbis, serializados em formato JSON
+
+- handshake_ping (C<--S)
+- handshake_pong (C-->S)
+- handshake_success (C<--S)
+- heartbeat_ping (C<--S)
+- heartbeat_pong (C-->S)
+  
+
+### **handshake_ping**
+Pacote enviado do servidor de controle para um zumbi após uma nova conexão via websocket ser aberta  
+
+
+### **handshake_pong**
+Pacote enviado do zumbi para um para o servidor de controle respondendo o handshake_ping, enviando também o nome/identificador do zumbi
+
+
+### **handshake_success**
+Pacote enviado do servidor de controle para um zumbi confirmando a conexão bem sucedida e gerando uma seed para o primeiro heartbeat do cliente.
+
+
+### **heartbeat_ping**
+Pacote enviado do servidor de controle para todos os zumbis conectados a cada 1s, mantendo controle de todos os zumbis ativos
+
+
+### **heartbeat_pong**
+Pacote enviado do zumbi ao servidor de controle respondendo um heartbeat_ping e realizando um Proof-of-Work (PoW) e retornando para o servidor de controle. Caso o PoW seja válido, o cliente é mantido na lista de zumbis ativos
+
+#
+
 <a name="setup"></a>
-### Setup
+## Setup
 > Work in progress, não está funcional ainda
 Para rodar o projeto em sua própria máquina, são necessárias algumas dependências:
 - python3 (3.9.7 foi usado para o desenvolvimento)
