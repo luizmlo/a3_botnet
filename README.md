@@ -2,9 +2,11 @@
 
 #
 
-Este é um repositório onde documentarei todo o processo de pesquisa e desenvolvimento do meu trabalho de conclusão de semestre da UC de Ambientes Computacionais e Segurança.  
-O tema escolhido pelo meu grupo foi o de Botnets, que é uma coleção de tecnologias que utilizam redes de computadores para comunicar-se entre si.  
-O projeto que escolhi fazer contará com uma botnet 100% funcional feita com websockets e Python, funcionando em cima do protocolo HTTP e rodando completamente no browser das "vítimas".
+Este é um repositório onde documentarei todo o processo de pesquisa e desenvolvimento de uma botnet do zero com python, websockets e asyncio, com o objetivo de aprender networking e redes, programação assincrona e outros conceitos.  
+
+Esta botnet será apresentada como demonstração durante a apresentação do trabalho de conclusão da matéria de Ambientes Computacionais e Segurança.  
+
+O tema escolhido pelo meu grupo foi o de Botnets, uma coleção de tecnologias utilizada para controlar de maneira distribuida um exercito de dispositivos infectados, podendo gerar muitos impactos com o grande poder de processamento e geração de tráfego. 
 
 #
 
