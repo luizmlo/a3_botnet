@@ -4,7 +4,7 @@
 
 Este é um repositório onde documentarei todo o processo de pesquisa e desenvolvimento de uma botnet do zero com python, websockets e asyncio, com o objetivo de aprender networking e redes, programação assincrona e outros conceitos.  
 
-Esta botnet será apresentada como demonstração durante a apresentação do trabalho de conclusão da matéria de Ambientes Computacionais e Segurança.  
+Esta botnet será apresentada como demonstração durante a apresentação do trabalho de conclusão da matéria de Sistemas Computacionais e Segurança.  
 
 O tema escolhido pelo meu grupo foi o de Botnets, uma coleção de tecnologias utilizada para controlar de maneira distribuida um exercito de dispositivos infectados, podendo gerar muitos impactos com o grande poder de processamento e geração de tráfego. 
 
@@ -19,11 +19,11 @@ O tema escolhido pelo meu grupo foi o de Botnets, uma coleção de tecnologias u
   - [Handshake](#handshake)
   - [Heartbeat](#heartbeat)
 - [Pacotes de Rede](#pacotes-de-rede)
-  - [**handshake_ping**](#handshake_ping)
-  - [**handshake_pong**](#handshake_pong)
-  - [**handshake_success**](#handshake_success)
-  - [**heartbeat_ping**](#heartbeat_ping)
-  - [**heartbeat_pong**](#heartbeat_pong)
+  - [handshake_ping](#handshake_ping)
+  - [handshake_pong](#handshake_pong)
+  - [handshake_success](#handshake_success)
+  - [heartbeat_ping](#heartbeat_ping)
+  - [heartbeat_pong](#heartbeat_pong)
 - [Setup](#setup)
 
 #
@@ -107,23 +107,23 @@ Este processo é puramente por Proof of Concept e não é de fato um handshake r
 - heartbeat_pong (C-->S)
   
 
-### **handshake_ping**
+### handshake_ping
 Pacote enviado do servidor de controle para um zumbi após uma nova conexão via websocket ser aberta  
 
 
-### **handshake_pong**
+### handshake_pong
 Pacote enviado do zumbi para um para o servidor de controle respondendo o handshake_ping, enviando também o nome/identificador do zumbi
 
 
-### **handshake_success**
+### handshake_success
 Pacote enviado do servidor de controle para um zumbi confirmando a conexão bem sucedida e gerando uma seed para o primeiro heartbeat do cliente.
 
 
-### **heartbeat_ping**
+### heartbeat_ping
 Pacote enviado do servidor de controle para todos os zumbis conectados a cada 1s, mantendo controle de todos os zumbis ativos
 
 
-### **heartbeat_pong**
+### heartbeat_pong
 Pacote enviado do zumbi ao servidor de controle respondendo um heartbeat_ping e realizando um Proof-of-Work (PoW) e retornando para o servidor de controle. Caso o PoW seja válido, o cliente é mantido na lista de zumbis ativos
 
 #
