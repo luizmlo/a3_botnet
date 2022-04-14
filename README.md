@@ -89,7 +89,7 @@ Este processo é puramente por Proof of Concept e não é de fato um handshake r
 #
 
 #### Heartbeat
-> O servidor de controle envia um pacote do tipo heartbeat_ping para todos os zumbis que estão conectados.
+> O servidor de controle envia um pacote do tipo heartbeat_ping para todos os zumbis que estão conectados, que devem responder com um heartbeat_pong para comprovarem que estão ativos e esperando o comando de ataque.
 
 #
 
