@@ -1,6 +1,5 @@
 ### A3 - Botnets
 
-#
 
 Este é um repositório onde documentarei todo o processo de pesquisa e desenvolvimento de uma botnet do zero com python, websockets e asyncio, com o objetivo de aprender networking e redes, programação assincrona e outros conceitos.  
 
