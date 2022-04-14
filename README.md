@@ -145,17 +145,24 @@ Para rodar o projeto em sua própria máquina, são necessárias algumas depend�
 ### Instalação
 O repositório conta com um arquivo de setup que instala todas as dependências necessárias em sistemas Unix usando apt e outras utilidades do shell.
 
-Para instalar com o *./build* você precisa ter o *sudo* habilitado.
+#### Linux/Unix
+Para instalar com o projeto você precisa de um usuário com privilégios administrativos, ou seja, um usuário com permissão de root.
 
+**Instalador**
 ```bash
 chmod +x ./build
 ./build
 ```
 
+**Instalando manualmente**
+```bash
+sudo apt install python3 python3-pip python3-venv
+```
+
 ### Executando
-Para rodar o servidor de controle e o frontend malicioso, utilize os comandos abaixo:
+Para rodar o servidor de controle e o cliente python de teste, utilize os comandos abaixo:
 
 ```bash
 ./start_c2
-./start_front
+./start_client
 ```
