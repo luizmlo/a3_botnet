@@ -21,4 +21,6 @@ python -m pip install -r requirements.txt --user
 
 # inicializa executaveis
 
-chmod +x ./run_zumbi
+chmod +x ./start_c2
+chmod +x ./start_client
+chmod +x ./start_frontend
