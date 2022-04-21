@@ -9,7 +9,7 @@ O tema escolhido pelo meu grupo foi o de Botnets, uma coleção de tecnologias u
 #
 
 ### Indice
-- [**Resumo do Projeto**](#resumo)
+- [**Resumo do Projeto**](#resumo-do-projeto)
   - [C2](#c2)
   - [Zumbi](#zumbi)
   - [Vitima](#vitima)
@@ -71,8 +71,8 @@ Os clientes conectados terão que responder um pulso enviado pelo servidor para 
 ### Vitima
 
 > A vítima do ataque distribuido
-s
-Este será um servidor de demonstração que irá sofrer o ataque coordenado da botnet e será sobrecarregado, tendo sua funcionalidade prejudicada pelos zumbis.
+
+Este será um servidor de demonstração que irá sofrer o ataque coordenado da botnet e será sobrecarregado, tendo sua funcionalidade prejudicada pelos zumbis.  
 
 Este irá contar com uma interface de monitoramento, onde iremos observar ao vivo o estado da vitima, quantas requisições estão chegando, a quantidade de banda, tráfego recebido e outras métricas.
 

@@ -115,7 +115,7 @@ async def handshake_pong(websocket, server_key):
 
 # async main
 async def main():
-    instances = 50
+    instances = 1
     tasks = [loop.create_task(client_main()) for _ in range(instances)]
     await asyncio.gather(*tasks)
 
