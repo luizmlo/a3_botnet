@@ -9,7 +9,7 @@ O tema escolhido pelo meu grupo foi o de Botnets, uma coleção de tecnologias u
 #
 
 ### Indice
-- [**Resumo do Projeto**](#resumo-do-projeto)
+- [**Resumo do Projeto**](#resumo)
   - [C2](#c2)
   - [Zumbi](#zumbi)
   - [Vitima](#vitima)
@@ -129,7 +129,9 @@ Este processo é puramente por Proof of Concept e não é de fato um handshake r
 - handshake_success (C<--S)
 - heartbeat_ping (C<--S)
 - heartbeat_pong (C-->S)
-  
+
+<a name="handshake_ping"></a>
+
 ### handshake_ping
 
 Pacote enviado do servidor de controle para um zumbi após uma nova conexão via websocket ser aberta, esperando como resposta um handshake pong contendo um nome completo para o cliente
@@ -138,6 +140,8 @@ Pacote enviado do servidor de controle para um zumbi após uma nova conexão via
 > "type": "handshake_ping",  
 > "server_key": "\<chave aleatoria\>"  
 > }
+
+<a name="handshake_pong"></a>
 
 ### handshake_pong
 
@@ -149,21 +153,39 @@ Pacote enviado do zumbi para o servidor de controle respondendo o handshake_ping
 > "checksum": "\<checksum\>"  
 > }
 
+<a name="handshake_success"></a>
+
 ### handshake_success
 
 Pacote enviado do servidor de controle para um zumbi confirmando a conexão bem sucedida e confirmando o inicio do pulso do heartbeat
 
 > {  
 > "type": "handshake_success",  
-> "checksum": server_checksum}
+> "checksum": server_checksum  
+> }
+
+<a name="heartbeat_ping"></a>
 
 ### heartbeat_ping
 
-Pacote enviado do servidor de controle para todos os zumbis conectados a cada 1s, mantendo controle de todos os zumbis ativos
+Pacote enviado do servidor de controle para todos os zumbis a cada 1s, mantendo controle de todos os zumbis que ainda estão ativos e que perderam a conexão
+
+> {  
+> "type":"heartbeat_ping",  
+> "seed": "\<numero aleatorio\>"  
+> }
+
+<a name="heartbeat_pong"></a>
 
 ### heartbeat_pong
 
-Pacote enviado do zumbi ao servidor de controle respondendo um heartbeat_ping e realizando um Proof-of-Work (PoW) e retornando para o servidor de controle. Caso o PoW seja válido, o cliente é mantido na lista de zumbis ativos
+Pacote enviado do zumbi ao servidor de controle respondendo um heartbeat_ping e realizando um Proof-of-Work (PoW) e retornando para o servidor de controle. Caso o PoW seja válido, o cliente é mantido na lista de zumbis ativos.  
+Por ser um processo demonstrativo, o algorítmo de Proof of Work é só inverter a seed enviada pelo servidor.
+
+> {  
+> "type":"heartbeat_pong",  
+> "pow": "\<numero aleatorio ao contrario\>"  
+> }
 
 #
 
