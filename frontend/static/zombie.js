@@ -9,9 +9,9 @@ function parse_message(ws, message) {
         console.log('received heartbeat_ping: ' + message['seed']);
         heartbeat_pong(ws, message['seed']);
     }
-}
+};
 
-function hash(string) {
+async function hash(string) {
     const utf8 = new TextEncoder().encode(string);
     return crypto.subtle.digest('SHA-256', utf8).then((hashBuffer) => {
         const hashArray = Array.from(new Uint8Array(hashBuffer));
@@ -76,6 +76,5 @@ function generateClientKey() {
     }
     return result;
 }
-
 
 connect_websocket();
