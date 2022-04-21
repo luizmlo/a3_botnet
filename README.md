@@ -1,36 +1,39 @@
 ### A3 - Botnets
 
-
 Este é um repositório onde documentarei todo o processo de pesquisa e desenvolvimento de uma botnet do zero com python, websockets e asyncio, com o objetivo de aprender networking e redes, programação assincrona e outros conceitos.  
 
 Esta botnet será apresentada como demonstração durante a apresentação do trabalho de conclusão da matéria de Sistemas Computacionais e Segurança.  
 
-O tema escolhido pelo meu grupo foi o de Botnets, uma coleção de tecnologias utilizada para controlar de maneira distribuida um exercito de dispositivos infectados, podendo gerar muitos impactos com o grande poder de processamento e geração de tráfego. 
+O tema escolhido pelo meu grupo foi o de Botnets, uma coleção de tecnologias utilizada para controlar de maneira distribuida um exercito de dispositivos infectados, podendo gerar muitos impactos com o grande poder de processamento e geração de tráfego.
 
 #
 
 ### Indice
-[**Resumo do Projeto**](#resumo-do-projeto)
+- [**Resumo do Projeto**](#resumo-do-projeto)
   - [C2](#c2)
   - [Zumbi](#zumbi)
   - [Vitima](#vitima)
-  
-[**Protocolos de Rede**](#protocolos-de-rede)
+- [**Protocolos de Rede**](#protocolos-de-rede)
   - [Handshake](#handshake)
   - [Heartbeat](#heartbeat)
-  
-[**Pacotes de Rede**](#pacotes-de-rede)
+- [**Pacotes de Rede**](#pacotes-de-rede)
   - [handshake_ping](#handshake_ping)
   - [handshake_pong](#handshake_pong)
   - [handshake_success](#handshake_success)
   - [heartbeat_ping](#heartbeat_ping)
   - [heartbeat_pong](#heartbeat_pong)
+- [**Setup**](#setup)
+  - [Dependencias](#dependencias)
+  - [Instalação](#instalação)
+    - [Linux/Unix](#linuxunix)
+  - [Executando](#executando)
   
 [**Setup**](#setup)
 
 #
 
 <a name="resumo"></a>
+
 ## **Resumo do Projeto**
 
 Este projeto vai ser muito complexo e contará com diversas partes, entre elas um servidor de controle que comandará os *zumbis*, um frontend malicioso que infecta as vítimas e um site que servirá de vítima da botnet, sofrendo um ataque de DDoS durante a apresentação ao vivo.
@@ -38,7 +41,9 @@ Este projeto vai ser muito complexo e contará com diversas partes, entre elas u
 #
 
 <a name="c2"></a>
+
 ### C2
+
 > O servidor de controle  
 
 Este será um servidor feito em python utilizando as bibliotecas asyncio e websocket que irá fazer a gestão, controle e monitoramento dos zumbis.
@@ -50,7 +55,9 @@ O servidor de c2 será responsável também por enviar o comando de ataque e par
 #
 
 <a name="zumbi"></a>
+
 ### Zumbi
+
 > O frontend malicioso
 
 Esta será uma aplicação web onde as vítimas irão se conectar e se comunicar com o servidor de controle, aguardando ordens de ataque por trás dos panos utilizando a tecnologia de websockets.
@@ -60,9 +67,11 @@ Os clientes conectados terão que responder um pulso enviado pelo servidor para 
 #
 
 <a name="vitima"></a>
-### Vitima
-> A vítima do ataque distribuido
 
+### Vitima
+
+> A vítima do ataque distribuido
+s
 Este será um servidor de demonstração que irá sofrer o ataque coordenado da botnet e será sobrecarregado, tendo sua funcionalidade prejudicada pelos zumbis.
 
 Este irá contar com uma interface de monitoramento, onde iremos observar ao vivo o estado da vitima, quantas requisições estão chegando, a quantidade de banda, tráfego recebido e outras métricas.
@@ -70,8 +79,11 @@ Este irá contar com uma interface de monitoramento, onde iremos observar ao viv
 #
 
 <a name="protocolos"></a>
+
 ## **Protocolos de Rede**
+
 ### Handshake
+
 > O processo começa com a abertura da conexão websocket, que é feita pelo cliente.  
 > O servidor então responde com um pacote handshake_ping e uma chave aleatória de 4 bytes que será utilizada para criptografar as mensagens entre o cliente e o servidor.  
 > O cliente então responde com um handshake_pong e outra chave aleatória de 4 bytes, além de um nome de tamanho entre 4 e 16 caracteres, usado para identificar o zumbi.  
@@ -88,77 +100,109 @@ Linha do tempo: (C=cliente, S=servidor))
 
 Este processo é puramente por Proof of Concept e não é de fato um handshake real, já que este processo é feito por trás dos panos já que estamos usando a tecnologia de websockets.
 
-> vou adicionar um gif depois
+**demo conexão handshake**
 
 ![](https://i.imgur.com/AgrAJAp.png)
+
+**gif com o processo completo de comunicação, desde o handshake até os heartbeats, com 3 clientes simultâneos**
+
+![](https://i.imgur.com/zBNBAuB.gif)
 
 #
 
 ### Heartbeat
+
 > O servidor de controle envia um pacote do tipo heartbeat_ping para todos os zumbis que estão conectados, que devem responder com um heartbeat_pong para comprovarem que estão ativos e esperando o comando de ataque.
+
+**Teste com 100 zumbis conectados:**
+
+![teste com 100 zumbis conectados](https://i.imgur.com/6MH3YfS.png)
 
 #
 
 ## **Pacotes de Rede**
+
 > Lista com os pacotes e conteudos trocados entre o servidor de controle e zumbis, serializados em formato JSON
 
 - handshake_ping (C<--S)
-- handshake_pong (C-->S)
+- handshake_pong (C-->S)s
 - handshake_success (C<--S)
 - heartbeat_ping (C<--S)
 - heartbeat_pong (C-->S)
   
-
 ### handshake_ping
-Pacote enviado do servidor de controle para um zumbi após uma nova conexão via websocket ser aberta  
 
+Pacote enviado do servidor de controle para um zumbi após uma nova conexão via websocket ser aberta, esperando como resposta um handshake pong contendo um nome completo para o cliente
+
+> {  
+> "type": "handshake_ping",  
+> "server_key": "\<chave aleatoria\>"  
+> }
 
 ### handshake_pong
-Pacote enviado do zumbi para um para o servidor de controle respondendo o handshake_ping, enviando também o nome/identificador do zumbi
 
+Pacote enviado do zumbi para o servidor de controle respondendo o handshake_ping, enviando também o nome/identificador do zumbi, composto por um nome escolhido pelo cliente ou gerado automaticamente, uma chave aleatória gerada no cliente e a chave recebida no handshake_ping e um checksum do nome completo, que será validado no servidor
+
+> {  
+> "type": "handshake_pong",  
+> "client_name": "\<identificador zumbi\>",  
+> "checksum": "\<checksum\>"  
+> }
 
 ### handshake_success
-Pacote enviado do servidor de controle para um zumbi confirmando a conexão bem sucedida e gerando uma seed para o primeiro heartbeat do cliente.
 
+Pacote enviado do servidor de controle para um zumbi confirmando a conexão bem sucedida e confirmando o inicio do pulso do heartbeat
+
+> {  
+> "type": "handshake_success",  
+> "checksum": server_checksum}
 
 ### heartbeat_ping
+
 Pacote enviado do servidor de controle para todos os zumbis conectados a cada 1s, mantendo controle de todos os zumbis ativos
 
-
 ### heartbeat_pong
+
 Pacote enviado do zumbi ao servidor de controle respondendo um heartbeat_ping e realizando um Proof-of-Work (PoW) e retornando para o servidor de controle. Caso o PoW seja válido, o cliente é mantido na lista de zumbis ativos
 
 #
 
 <a name="setup"></a>
+
 ## **Setup**
+
 > Work in progress, não está funcional ainda
 Para rodar o projeto em sua própria máquina, são necessárias algumas dependências.
 
 ### Dependencias
+
 - python3 (3.9.7 foi usado para o desenvolvimento)
 - python3-pip
 - python3-venv
 
-
 ### Instalação
+
 O repositório conta com um arquivo de setup que instala todas as dependências necessárias em sistemas Unix usando apt e outras utilidades do shell.
 
 #### Linux/Unix
+
 Para instalar com o projeto você precisa de um usuário com privilégios administrativos, ou seja, um usuário com permissão de root.
 
 **Instalador**
+
 ```bash
 chmod +x ./build
 ./build
 ```
 
 **Instalando manualmente**
+
 ```bash
 sudo apt install python3 python3-pip python3-venv
 ```
 
 ### Executando
+
 Para rodar o servidor de controle e o cliente python de teste, utilize os comandos abaixo:
 
 ```bash

@@ -18,11 +18,8 @@ async def parse_message(websocket):
                 if message['type'] == 'handshake_pong':
                     client_name = message['client_name']
                     client_checksum = message['checksum']
-                    if len(client_name) >= 4 and len(client_name) <= 16 and len(client_checksum) == 16:
-                        print(f'[S] finishing handshake with {client_name}')
-                        alive = await finish_handshake(websocket, client_name, message['checksum'])
-                        if alive:
-                            print(f'[S] valid checksum - adding {client_name} to alive_bots')
+                    if len(client_name) >= 4 and len(client_checksum) == 16:
+                        await finish_handshake(websocket, client_name, message['checksum'])
 
                     else:
                         print('EASTER EGG') # todo  
@@ -31,10 +28,45 @@ async def parse_message(websocket):
                     raise Exception(f'[C] unknown message type: {message}')
 
         except Exception as e:
-            print(f'[S] server error on parse_message: {str(e)}')
+            if 'no close frame received or sent' in str(e) or 'received 1000 (OK); then sent 1000 (OK)' in str(e):
+                print(f'[C] {client_name} connection closed')
+                break
+            else:
+                print(f'[S] server error on parse_message: {str(e)}')
+                break
 
-        response = json.dumps(message)  
-        await websocket.send(response)
+# heatbeat function that sends a message from the server to the client every second
+async def heartbeat(websocket, client_name):
+    print(f'[S] starting heartbeat to {client_name}')
+    while True:
+        try:
+            await asyncio.sleep(1)
+            if websocket in alive_bots:
+                heartbeat_seed = random.randint(10000, 99999)
+                heartbeat_message = {"type":"heartbeat_ping", "seed": heartbeat_seed}
+                heartbeat_message = json.dumps(heartbeat_message)
+                await websocket.send(heartbeat_message)
+                print(f'[S] heartbeat to {client_name} - {heartbeat_seed}')
+
+                response = await websocket.recv()
+                response = json.loads(response)
+                if response['type'] == 'heartbeat_pong':
+                    if response['pow'] == str(heartbeat_seed)[::-1]:
+                        print(f'[C] {client_name} alive')
+
+                    else:
+                        print(f'[S] {client_name} dead')
+                        alive_bots.remove(websocket)
+                        break
+
+
+        except Exception as e:
+            if 'received 1000' in str(e):
+                print(f'[C] {client_name} disconnected')
+                alive_bots.remove(websocket)
+            else:
+                print(f'[S] server error on heartbeat: {str(e)}')
+            break
 
 async def finish_handshake(websocket, client_name, client_checksum) -> bool:
     print(f'[C] received handshake_pong - {client_name}')
@@ -51,8 +83,9 @@ async def finish_handshake(websocket, client_name, client_checksum) -> bool:
 
     handshake_success = json.dumps(handshake_success)
     await websocket.send(handshake_success)
-    print(f'[S] {client_name} alive-  waiting for heartbeat')
-
+    print(f'[S] {client_name} alive - starting heartbeat')
+    alive_bots.append(websocket)
+    await heartbeat(websocket, client_name)
 
 
 async def start_handshake(websocket):

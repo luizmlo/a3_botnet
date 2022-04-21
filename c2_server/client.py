@@ -25,13 +25,33 @@ async def parse_message(websocket, message):
                 print(f"[S] received handshake_success - checksum: {message['checksum']}")
             return {"type":"handshake_success", "checksum": message['checksum']}
 
+        elif message and message['type'] == 'heartbeat_ping':
+            if debug_mode:
+                print(f"[S] received heartbeat: {message['seed']}")
+            await heartbeat_pong(websocket, message['seed'])
+            return {"type":"heartbeat_ping", "seed": message['seed']}
+
+        else:
+            print(f'[C] received unknown message: {message}')
+            return {'type': 'unknown'}
 
     except Exception as e: 
         print(f'[C] client error on parse_message: {str(e)}')
         return {"type":"error", "error": str(e)}
 
+async def heartbeat_pong(websocket, seed):
+    try:
+        _pow = str(seed)[::-1]
+        print(f'[C] sending heartbeat_pong: {_pow}')
+        message = {"type": "heartbeat_pong", "pow": _pow}
+        message = json.dumps(message)
+        await websocket.send(message)
 
-async def main():
+    except Exception as e:
+        print(f'[C] client error on heartbeat_pong: {str(e)}')
+
+
+async def client_main():
     async with websockets.connect(f"ws://{server_ip}:{server_port}") as websocket:
         print(f'[C] created connection to server {server_ip}:{server_port}')
 
@@ -44,7 +64,11 @@ async def main():
                     await parse_message(websocket, message)    
 
             except Exception as e:
-                print(f'[C] client error on main: {str(e)}')
+                if 'no close frame received or sent' in str(e) or 'received 1000' in str(e):
+                    print(f'[C] disconected from server')
+                else:
+                    print(f'[C] client error on main: {str(e)}')
+                break
 
 async def handshake_finish(client_checksum, server_checksum):
     try:
@@ -57,10 +81,15 @@ async def handshake_finish(client_checksum, server_checksum):
 
 async def handshake_pong(websocket, server_key):
     try:
+        interactive = False
         client_key = "".join([random.choice('abcdef0123456789') for _ in range(4)])
         client_name = None
         while not client_name:
-            client_name = input('[C] input client name (4-16 chars): ').strip()        
+            if interactive:
+                client_name = input('[C] input client name (4-16 chars): ').strip()        
+            else:
+                client_name = "".join([random.choice('abcdef0123456789') for _ in range(4)])
+
             if len(client_name) >= 4 and len(client_name) < 16:
                 #print(f'[C] client name: {client_name} - sending handshake_pong')
                 pass
@@ -84,4 +113,11 @@ async def handshake_pong(websocket, server_key):
     except Exception as e:
         print(f'[C] client error on handshake_pong: {str(e)}')
 
-asyncio.run(main())
+# async main
+async def main():
+    instances = 50
+    tasks = [loop.create_task(client_main()) for _ in range(instances)]
+    await asyncio.gather(*tasks)
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main())
