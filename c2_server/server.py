@@ -32,7 +32,7 @@ async def parse_message(websocket):
                 print(f'[C] {client_name} connection closed')
                 break
             else:
-                print(f'[S] server error on parse_message: {str(e)}')
+                #print(f'[S] server error on parse_message: {str(e)}')
                 break
 
 # heatbeat function that sends a message from the server to the client every second
@@ -43,7 +43,7 @@ async def heartbeat(websocket, client_name):
             await asyncio.sleep(1)
             if websocket in alive_bots:
                 heartbeat_seed = random.randint(10000, 99999)
-                heartbeat_message = {"type":"heartbeat_ping", "seed": heartbeat_seed}
+                heartbeat_message = {"type":"heartbeat_ping", "seed": heartbeat_seed, "payload": ""}
                 heartbeat_message = json.dumps(heartbeat_message)
                 await websocket.send(heartbeat_message)
                 print(f'[S] heartbeat to {client_name} - {heartbeat_seed}')
@@ -61,7 +61,7 @@ async def heartbeat(websocket, client_name):
 
 
         except Exception as e:
-            if 'received 1000' in str(e):
+            if 'received 1000' in str(e) or 'going away' in str(e):
                 print(f'[C] {client_name} disconnected')
                 alive_bots.remove(websocket)
             else:

@@ -2,51 +2,14 @@
 <html lang="pt-br">
     <head>
         <title>Zumbi</title>
+        <link rel="stylesheet" href="./static/style.css">
     </head>
     <body>
-        <h3>Esta é a aplicação maliciosa que infecta o navegador do usuário que acessa o site, podendo ser rodado por trás dos panos e sem mostrar nada.</h3>
-        <h4 id="error" style="color: red;">
-        <!-- form that asks for a username between 4 and 16 characters -->
-        <!-- executes a javascript function -->
-        <form action="" method="post" id="client_name_form">
-            <input type="text" minlength="4" maxlength="16" name="client_name" placeholder="Digite um nome: " required>
-            <input type="submit" value="Enviar">
-        </form>
+        <div id="title-text">titulo</div>
 
-        <h4 id="output"></h4>
-
-        <script>
-            // create event listener that calls get_client_name() when the form is submitted
-            // prevents the default behavior of the form
-            document.getElementById("client_name_form").addEventListener("submit", function(event) {
-                event.preventDefault();
-                get_client_name();
-            });
-
-            // function that gets the value of the input field and displays it in the output field
-            function get_client_name() {
-                var client_name = document.getElementById("client_name_form").client_name.value;
-
-                client_key = generateClientKey();
-                text = "seu id: " + client_name + "_" + client_key;
-                document.getElementById("output").innerHTML = text;
-            }
-
-
-            // generate random string of 4 hexadecimal characters
-            // print string in console
-            function generateClientKey() {
-                let chars = '0123456789abcdef';
-                let result = '';
-                for (let i = 0; i < 4; i++) {
-                    result += chars[Math.floor(Math.random() * chars.length)];
-                }
-                return result;
-            }
-
-            console.log(generateClientKey());
-
-        </script>
+        <script src="./static/zombie.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     </body>
 
 </html>
