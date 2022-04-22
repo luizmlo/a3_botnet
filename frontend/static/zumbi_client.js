@@ -31,6 +31,7 @@ function connect_websocket(){
     log_message('conectando com o servidor ' + server_ip + ':' + server_port + '...', 'log-success');
 
     ws.onmessage = function (event) {
+        received_counter += 1;
         message = JSON.parse(event.data);
         console.log("received: ", message);
         if (debug_mode) {
@@ -38,7 +39,21 @@ function connect_websocket(){
         }
         parse_message(ws, message);
     }
-    log_message('conectado ao servidor de controle', 'log-success');
+
+    ws.onerror = function (event) {
+        if (!event.data){
+            log_message('server unreachable.', 'log-error');
+        }
+    }
+
+    ws.onclose = function (event) {
+        log_message('connection closed.', 'log-error');
+    }
+
+    ws.onopen = function (event) {
+        log_message('conectado ao servidor de controle', 'log-success');
+    }
+
     if (!debug_mode) {
         log_message('habilite o modo de debug no canto superior direito para ver toda a comunicação com o servidor de controle.', 'log-info');
     }
@@ -63,6 +78,7 @@ async function handshake_pong(ws, server_key) {
         };
         var msg = JSON.stringify(message);
         ws.send(msg);
+        sent_counter += 1;
         if (debug_mode) {
             log_message('sent: ' + msg);
         }
@@ -77,6 +93,7 @@ function heartbeat_pong(ws, seed) {
     };
     var msg = JSON.stringify(message);
     ws.send(msg);
+    sent_counter += 1;
     if (debug_mode) {
         log_message('sent: ' + msg);
     }
