@@ -227,9 +227,16 @@ sudo apt install python3 python3-pip python3-venv
 
 ### Executando
 
-Para rodar o servidor de controle e o cliente python de teste, utilize os comandos abaixo:
+Guia temporário, o projeto contará com instalador e utils para rodar  
+
+servidor c2:
 
 ```bash
-./start_c2
-./start_client
+cd ./c2_server/; python ./server.py
+```
+
+webapp:
+
+```bash
+cd ./frontend/; python ./app.py
 ```
