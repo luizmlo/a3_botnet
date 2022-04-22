@@ -60,9 +60,11 @@ O servidor de c2 será responsável também por enviar o comando de ataque e par
 
 > O frontend malicioso
 
-Esta será uma aplicação web onde as vítimas irão se conectar e se comunicar com o servidor de controle, aguardando ordens de ataque por trás dos panos utilizando a tecnologia de websockets.
+![](https://i.imgur.com/KAzrLa3.png)
 
-Os clientes conectados terão que responder um pulso enviado pelo servidor para provar que ainda estão conectados e ativos, esperando o comando e o alvo do ataque.
+Esta é a aplicação web onde as vítimas irão se conectar e se comunicar com o servidor de controle, aguardando ordens de ataques utilizando a tecnologia de websockets.
+
+Os clientes conectados respondem um pulso enviado a cada segundo pelo servidor de controle para provar que ainda estão conectados e ativos, esperando o comando e o alvo do ataque.
 
 #
 
