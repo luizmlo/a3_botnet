@@ -20,8 +20,8 @@ function log_message(message, type='log-default') {
 
 // update footer labels
 function update_footer_labels() {
-    document.getElementById('sent-label').innerText = "enviadas:" + sent_counter;
-    document.getElementById('received-label').innerText = "recebidas:" + received_counter;
+    document.getElementById('sent-label').innerText = "sent:" + sent_counter;
+    document.getElementById('received-label').innerText = "received:" + received_counter;
 }
 
 // run update_footer_labels every second

@@ -117,7 +117,8 @@ body {
 }
 
 #footer-labels{
-    color: white;
+    height: 100%;
+    color: rgb(199, 199, 199, 0.75);
     text-align: start;
     position: relative;
     vertical-align: middle;
