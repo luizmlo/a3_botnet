@@ -67,12 +67,9 @@ async function handshake_pong(ws, server_key) {
             log_message('sent: ' + msg);
         }
     });
-
 }
 
 // reverse string js
-
-
 function heartbeat_pong(ws, seed) {
     var message = {
         'type': 'heartbeat_pong',
