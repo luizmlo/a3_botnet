@@ -61,7 +61,11 @@ async function handshake_pong(ws, server_key) {
             'client_name': client_full_name,
             'checksum': checksum
         };
-        ws.send(JSON.stringify(message));
+        var msg = JSON.stringify(message);
+        ws.send(msg);
+        if (debug_mode) {
+            log_message('sent: ' + msg);
+        }
     });
 
 }
