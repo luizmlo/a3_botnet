@@ -24,12 +24,23 @@ async function hash(string) {
 
 function connect_websocket(){
     // inicializa websocket e define o evento de recebimento de mensagens
-    var ws = new WebSocket("ws://localhost:8765");
+    var server_ip = 'localhost';
+    var server_port = 8765;
+    var ws_url = 'ws://' + server_ip + ':' + server_port;
+    var ws = new WebSocket(ws_url);
+    log_message('conectando com o servidor ' + server_ip + ':' + server_port + '...', 'log-success');
 
     ws.onmessage = function (event) {
         message = JSON.parse(event.data);
-        console.log("message received: ", message);
+        console.log("received: ", message);
+        if (debug_mode) {
+            log_message('received: ' + event.data);
+        }
         parse_message(ws, message);
+    }
+    log_message('conectado ao servidor de controle', 'log-success');
+    if (!debug_mode) {
+        log_message('habilite o modo de debug no canto superior direito para ver toda a comunicação com o servidor de controle.', 'log-info');
     }
 }
 
@@ -63,7 +74,11 @@ function heartbeat_pong(ws, seed) {
         'type': 'heartbeat_pong',
         'pow': seed.toString().split('').reverse().join('')
     };
-    ws.send(JSON.stringify(message));
+    var msg = JSON.stringify(message);
+    ws.send(msg);
+    if (debug_mode) {
+        log_message('sent: ' + msg);
+    }
 }
 
 // generate random string of 4 hexadecimal characters
@@ -76,5 +91,3 @@ function generateClientKey() {
     }
     return result;
 }
-
-connect_websocket();
