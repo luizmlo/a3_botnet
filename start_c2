@@ -1,0 +1,11 @@
+#! /bin/sh
+
+
+# try to source the venv
+source ./env/bin/activate 2> /dev/null
+
+# cd to server folder
+cd ./c2_server
+
+# execute main file
+python server.py
