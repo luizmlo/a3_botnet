@@ -1,7 +1,7 @@
 particlesJS.load('particles-js', './static/particles-config.json');
 
 // metrics
-var debug_mode = true;
+var debug_mode = false;
 var log_counter = 0;
 var sent_counter = 0;
 var received_counter = 0;

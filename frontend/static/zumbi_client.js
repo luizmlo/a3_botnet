@@ -56,11 +56,11 @@ function connect_websocket(){
 
     ws.onopen = function (event) {
         log_message('conectado ao servidor de controle', 'log-success');
+        if (!debug_mode) {
+            log_message('habilite o modo de debug no canto superior direito para ver toda a comunicação com o servidor de controle.', 'log-info');
+        }
     }
 
-    if (!debug_mode) {
-        log_message('habilite o modo de debug no canto superior direito para ver toda a comunicação com o servidor de controle.', 'log-info');
-    }
 }
 
 
