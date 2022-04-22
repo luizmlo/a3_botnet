@@ -11,6 +11,7 @@ function parse_message(ws, message) {
     }
 };
 
+// hasha uma string e retorna o digest
 async function hash(string) {
     const utf8 = new TextEncoder().encode(string);
     return crypto.subtle.digest('SHA-256', utf8).then((hashBuffer) => {
@@ -43,6 +44,9 @@ function connect_websocket(){
     ws.onerror = function (event) {
         if (!event.data){
             log_message('server unreachable.', 'log-error');
+        }
+        else {
+            log_message('error: ' + event.data, 'log-error');
         }
     }
 
