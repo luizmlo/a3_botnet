@@ -1,6 +1,6 @@
 ### A3 - Botnets
 
-Este é um repositório onde documentarei todo o processo de pesquisa e desenvolvimento de uma botnet do zero com python, websockets e asyncio, com o objetivo de aprender networking e redes, programação assincrona e outros conceitos.  
+Este é um repositório onde vou documentar todo o processo de pesquisa e desenvolvimento de uma botnet do zero com python, websockets e asyncio, com o objetivo de aprender networking e redes, programação assincrona e outros conceitos.  
 
 Esta botnet será apresentada como demonstração durante a apresentação do trabalho de conclusão da matéria de Sistemas Computacionais e Segurança.  
 
@@ -36,7 +36,7 @@ O tema escolhido pelo meu grupo foi o de Botnets, uma coleção de tecnologias u
 
 ## **Resumo do Projeto**
 
-Este projeto vai ser muito complexo e contará com diversas partes, entre elas um servidor de controle que comandará os *zumbis*, um frontend malicioso que infecta as vítimas e um site que servirá de vítima da botnet, sofrendo um ataque de DDoS durante a apresentação ao vivo.
+Este projeto vai ser complexo e contará com diversas partes, entre elas um servidor de controle que comandará os *zumbis*, um frontend malicioso que infecta as vítimas e um site que vai ser a vítima da botnet, sofrendo um ataque de DDoS durante a apresentação ao vivo.
 
 #
 
