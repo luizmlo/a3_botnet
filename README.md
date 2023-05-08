@@ -195,8 +195,8 @@ Por ser um processo demonstrativo, o algorítmo de Proof of Work é só inverter
 
 ## **Setup**
 
-> Work in progress, não está funcional ainda
-Para rodar o projeto em sua própria máquina, são necessárias algumas dependências.
+> Work in progress, não está funcional  
+> Para rodar o projeto em sua própria máquina, são necessárias algumas dependências.
 
 ### Dependencias
 
